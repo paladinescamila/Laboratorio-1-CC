@@ -151,7 +151,7 @@ def main():
          [0, 0, 0, -3],
     ]
     b = [12, 10, -9, -3]
-    solucion_SEL(A, b, 1)
+    # solucion_SEL(A, b, 1)
 
     # Ejemplo 2
     A = [
@@ -162,10 +162,19 @@ def main():
          [0, 0, 0, 0, 1]
     ]
     b = [4, 7, 3, 8, 5]
-    solucion_SEL(A, b, 1)
+    # solucion_SEL(A, b, 1)
     
     # Ejemplo 3
-
+    A = [
+         [7, 20, 13, 25, 89, 16],
+         [0, 5, 56, 14, 77, 6],
+         [0, 0, 17, 15, 10, 5],
+         [0, 0, 0, 32, 8, 4],
+         [0, 0, 0, 0, 9, 2],
+         [0, 0, 0, 0, 0, 3]
+    ]
+    b = [8, 19, 50, 3, 24, 10]
+    # solucion_SEL(A, b, 1)
 
     # SUSTITUCIÓN SUCESIVA HACIA ADELANTE
     # Ejemplo 1
@@ -184,7 +193,7 @@ def main():
         [-4, -1, -5, 3, -4]
     ]
     b = [7, 1, 33, 24, 49]
-    solucion_SEL(A, b, 3)
+    # solucion_SEL(A, b, 3)
 
     # Ejemplo 3
 
