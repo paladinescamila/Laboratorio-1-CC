@@ -50,7 +50,7 @@ def dibujar_SPF(t, L, U):
     print("N: {0}\tUFL: {1}\tOFL: {2}".format(N, UFL, OFL))
     print("Tarda {0}".format(fin-inicio))
     for i in numeros:
-        plt.plot(i, 0, marker="o", color="blue", markersize = 3)
+        plt.plot(i, 0, marker="o", color="blue", markersize = 10)
     plt.grid()
     plt.show()
     print()
