@@ -59,6 +59,7 @@ def dibujar_SPF(t, L, U):
     print()
 
 
+# EJEMPLOS DE PRUEBA (También se encuentran en el informe)
 def main():
     # Ejemplo 1
     dibujar_SPF(3,-1,3)
