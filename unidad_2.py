@@ -3,21 +3,26 @@
 import numpy as np
 import time
 
+
 # Método de Sustitución Sucesiva hacia atrás
 def sucesiva_hacia_atras(A, b):
     """
     Entrada: una matriz triangular superior A y un vector b.
     Salida: un vector x tal que Ax = b.
     """
-    n = len(b) - 1
-    x = [None for _ in range(n)] + [b[n] / A[n][n]]
-    for i in range(n, -1, -1):
-        sumatoria = 0
-        for j in range(i+1, n+1):
-            sumatoria += A[i][j] * x[j]
-        x[i] = (b[i] - sumatoria) / A[i][i]
+    if (np.linalg.det(A) == 0):
+        print("A es una matriz singular, el sistema no tiene solución.")
+        return []
+    else:
+        n = len(A) - 1
+        x = [None for _ in range(n)] + [b[n] / A[n][n]]
+        for i in range(n, -1, -1):
+            sumatoria = 0
+            for j in range(i+1, n+1):
+                sumatoria += A[i][j] * x[j]
+            x[i] = (b[i] - sumatoria) / A[i][i]
 
-    return x
+        return x
 
 
 # Método de Sustitución Sucesiva hacia adelante
@@ -26,15 +31,19 @@ def sucesiva_hacia_adelante(A, b):
     Entrada: una matriz triangular inferior A y un vector b.
     Salida: un vector x tal que Ax = b.
     """
-    n = len(b) - 1
-    x = [b[0] / A[0][0]] + [None for _ in range(n)]
-    for i in range(1, n+1):
-        sumatoria = 0
-        for j in range(i):
-            sumatoria += A[i][j] * x[j]
-        x[i] = (b[i] - sumatoria) / A[i][i]
+    if (np.linalg.det(A) == 0):
+        print("A es una matriz singular, el sistema no tiene solución.")
+        return []
+    else:
+        n = len(A) - 1
+        x = [b[0] / A[0][0]] + [None for _ in range(n)]
+        for i in range(1, n+1):
+            sumatoria = 0
+            for j in range(i):
+                sumatoria += A[i][j] * x[j]
+            x[i] = (b[i] - sumatoria) / A[i][i]
 
-    return x
+        return x
 
 
 # Construye la matriz de eliminación para una columna
@@ -55,24 +64,25 @@ def matriz_de_eliminacion(A, k, g):
     return M
 
 
-def row_swap_mat(i, j, n):
-    P = np.eye(n)
-    P[i] = 0
-    P[j] = 0
-    P[i][j] = 1
-    P[j][i] = 1
-    return P
-
+# Permuta una matriz y un vector dados con respecto a una fila de A
 def permutar(A, b, k):
+    """
+    Entrada: una matriz A, un vector b y un entero k.
+    Salida: una matriz A y un vector b permutados con respecto a k,
+            además de un booleano que determina si el nuevo valor
+            del pivote es cero.
+    """
     n = len(A)
-    if (k != n-1):
-        i = k+1
-        while (i != n-1 and A[k][k] == 0):
-            A = row_swap_mat(k,i,n).dot(A)
-            b = row_swap_mat(k,i,n).dot(b)
-            i += 1
-            k += 1
-    return A, b
+    i = k + 1
+    while (i != n and A[k][k] == 0):
+        P = np.identity(n)
+        P[k], P[i], P[k][i], P[i][k] = 0, 0, 1, 1
+        A = np.matmul(P, A)
+        b = np.matmul(P, b)
+        i += 1
+    cero = not (A[k][k] == 0)
+
+    return A, b, cero
 
 
 # Método de Eliminación de Gauss
@@ -81,19 +91,24 @@ def gauss(A, b):
     Entrada: una matriz cuadrada A y un vector b.
     Salida: un vector x tal que Ax = b.
     """
-    n = len(A)
-    for k in range(n-1):
-        if (A[k][k] != 0):
-            M = matriz_de_eliminacion(A, k, 1)
-            A = np.matmul(M, A)
-            b = np.matmul(M, b)
-        else:
-            A, b = permutar(A, b, k)
-    # FALTA:
-    # 1. Permutación si el pivote es 0
-    # 2. Decir que no hay solución si hay una columna llena de ceros
-    x = sucesiva_hacia_atras(A, b)
-    return x
+    if (np.linalg.det(A) == 0):
+        print("A es una matriz singular, el sistema no tiene solución.")
+        return []
+    else:
+        n = len(A)
+        for k in range(n-1):
+            if (A[k][k] != 0):
+                M = matriz_de_eliminacion(A, k, 1)
+                A = np.matmul(M, A)
+                b = np.matmul(M, b)
+            else:
+                A, b, cero = permutar(A, b, k)
+                if (cero):
+                    print("El sistema no tiene solución")
+                    return []
+        x = sucesiva_hacia_atras(A, b)
+
+        return x
 
 
 # Método de eliminación de Gauss-Jordan
@@ -102,41 +117,52 @@ def gauss_jordan(A, b):
     Entrada: una matriz cuadrada A y un vector b.
     Salida: un vector x tal que Ax = b.
     """
-    n = len(A)
-    for k in range(n):
-        M = matriz_de_eliminacion(A, k, 0)
-        A = np.matmul(M, A)
-        b = np.matmul(M, b)
-    x = [b[i] / A[i][i] for i in range(n)]
-    return x
+    if (np.linalg.det(A) == 0):
+        print("A es una matriz singular, el sistema no tiene solución.")
+        return []
+    else:
+        n = len(A)
+        for k in range(n):
+            if (A[k][k] != 0):
+                M = matriz_de_eliminacion(A, k, 0)
+                A = np.matmul(M, A)
+                b = np.matmul(M, b)
+            else:
+                A, b, cero = permutar(A, b, k)
+                if (cero):
+                    print("El sistema no tiene solución")
+                    return []
+        x = [b[i] / A[i][i] for i in range(n)]
+
+        return x
 
 
 # Imprime la solución de un Sistema de Ecuaciones Lineales
 def solucion_SEL(A, b, metodo):
-    if (np.linalg.det(A) == 0):
-        print("A es una matriz singular, el sistema no tiene solución.")
-    else:
-        if (metodo == 1):
-            print("Método de Sucesión Sucesiva hacia atrás")
-            inicio = time.time()
-            x = sucesiva_hacia_atras(A, b)
-            fin = time.time()
-        elif (metodo == 2):
-            print("Método de Sucesión Sucesiva hacia adelante")
-            inicio = time.time()
-            x = sucesiva_hacia_adelante(A, b)
-            fin = time.time()
-        elif (metodo == 3):
-            print("Método de Eliminación de Gauss")
-            inicio = time.time()
-            x = gauss(A, b)
-            fin = time.time()
-        elif (metodo == 4):
-            print("Método de Eliminación de Gauss-Jordan")
-            inicio = time.time()
-            x = gauss_jordan(A, b)
-            fin = time.time()
-        print("x = {0}\nTarda {1}\n".format(x, fin-inicio))
+    if (metodo == 1):
+        print("Método de Sustitución Sucesiva hacia atrás")
+        inicio = time.time()
+        x = sucesiva_hacia_atras(A, b)
+        fin = time.time()
+
+    elif (metodo == 2):
+        print("Método de Sustitución Sucesiva hacia adelante")
+        inicio = time.time()
+        x = sucesiva_hacia_adelante(A, b)
+        fin = time.time()
+
+    elif (metodo == 3):
+        print("Método de Eliminación de Gauss")
+        inicio = time.time()
+        x = gauss(A, b)
+        fin = time.time()
+
+    elif (metodo == 4):
+        print("Método de Eliminación de Gauss-Jordan")
+        inicio = time.time()
+        x = gauss_jordan(A, b)
+        fin = time.time()
+    print("x = {0}\nTarda {1}\n".format(x, fin-inicio))
 
 
 def main():
@@ -216,7 +242,6 @@ def main():
     ]
     b = [37, 71, 11, 42, 94, 96]
     # solucion_SEL(A, b, 3)
-    print("x =",list(np.matmul(np.linalg.inv(A), b)))
 
     # GAUSS-JORDAN
     # Ejemplo 1
@@ -225,3 +250,5 @@ def main():
 
 
 main()
+
+# Rectificar respuesta con: print("x =",list(np.matmul(np.linalg.inv(A), b)))

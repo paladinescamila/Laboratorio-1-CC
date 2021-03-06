@@ -3,6 +3,7 @@
 import matplotlib.pyplot as plt
 import time
 
+
 # Conversor de entero a binario
 def calcular_di(i, t):
     """
@@ -17,7 +18,7 @@ def calcular_di(i, t):
     return ceros + binario
 
 
-# Generador de números del sistema de punto flotante (con beta = 2)
+# Generador de números del Sistema de Punto Flotante (con beta = 2)
 def punto_flotante(t, L, U):
     """
     Entrada: tres enteros t, L y U.
@@ -34,7 +35,7 @@ def punto_flotante(t, L, U):
             numeros += [x*(2**e), x*(2**e)*(-1)]
     
     numeros = sorted(list(set(numeros)))
-    N = 2 * (2**(t-1)) * (U-L+1) + 1
+    N = (2**t) * (U-L+1) + 1
     UFL = 2**L
     OFL = 2**(U+1) * (1-2**(-t))
     
@@ -46,9 +47,11 @@ def dibujar_SPF(t, L, U):
     inicio = time.time()
     numeros, N, UFL, OFL = punto_flotante(t, L, U)
     fin = time.time()
+
     print("Sistema: {0}".format(numeros))
-    print("N: {0}\tUFL: {1}\tOFL: {2}".format(N, UFL, OFL))
+    print("N: {0}\nUFL: {1}\nOFL: {2}".format(N, UFL, OFL))
     print("Tarda {0}".format(fin-inicio))
+
     for i in numeros:
         plt.plot(i, 0, marker="o", color="blue", markersize = 10)
     plt.grid()
