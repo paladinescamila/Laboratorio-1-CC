@@ -80,7 +80,7 @@ def permutar(A, b, k):
         A = np.matmul(P, A)
         b = np.matmul(P, b)
         i += 1
-    cero = not (A[k][k] == 0)
+    cero = A[k][k] == 0
 
     return A, b, cero
 
