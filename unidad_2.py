@@ -178,7 +178,7 @@ def main():
          [0, 0, 0, -3],
     ]
     b = [12, 10, -9, -3]
-    # solucion_SEL(A, b, 1)
+    solucion_SEL(A, b, 1)
 
     # Ejemplo 2
     A = [
@@ -189,7 +189,7 @@ def main():
          [0, 0, 0, 0, 1]
     ]
     b = [4, 7, 3, 8, 5]
-    # solucion_SEL(A, b, 1)
+    solucion_SEL(A, b, 1)
     
     # Ejemplo 3
     A = [
@@ -201,7 +201,7 @@ def main():
          [0, 0, 0, 0, 0, 3]
     ]
     b = [8, 19, 50, 3, 24, 10]
-    # solucion_SEL(A, b, 1)
+    solucion_SEL(A, b, 1)
 
 
     # SUSTITUCIÓN SUCESIVA HACIA ADELANTE
@@ -214,7 +214,7 @@ def main():
          [6, 15, 32, 1]
     ]
     b = [3, 2, 7, 4]
-    # solucion_SEL(A, b, 2)
+    solucion_SEL(A, b, 2)
 
     # Ejemplo 2
     A = [
@@ -225,7 +225,7 @@ def main():
          [-2, 0.5, -3.5, 7.4, 6]
     ]
     b = [12, 0.2, 7, 0.14, 1]
-    # solucion_SEL(A, b, 2)
+    solucion_SEL(A, b, 2)
 
     # Ejemplo 3
     A = [
@@ -237,7 +237,7 @@ def main():
          [-3, -1.5, 6, -19.7, -8, 1.5]
     ]
     b = [15, 19.7, 4, 7.4, 10, 1.5]
-    # solucion_SEL(A, b, 2)
+    solucion_SEL(A, b, 2)
 
 
     # GAUSS
@@ -250,7 +250,7 @@ def main():
         [-1, 2, -2, 6]
     ]
     b = [4, -2, 30, 21]
-    # solucion_SEL(A, b, 3)
+    solucion_SEL(A, b, 3)
 
     # Ejemplo 2
     A = [
@@ -261,7 +261,7 @@ def main():
         [-4, -1, -5, 3, -4]
     ]
     b = [7, 1, 33, 24, 49]
-    # solucion_SEL(A, b, 3)
+    solucion_SEL(A, b, 3)
 
     # Ejemplo 3
     A = [
@@ -273,7 +273,7 @@ def main():
         [-64, 32, 51, 73, -24, 34] 
     ]
     b = [37, 71, 11, 42, 94, 96]
-    # solucion_SEL(A, b, 3)
+    solucion_SEL(A, b, 3)
 
 
     # GAUSS-JORDAN
@@ -286,7 +286,7 @@ def main():
         [1, 1, 2, 5], 
     ]
     b = [-6, 17, -14, 12]
-    # solucion_SEL(A, b, 4)
+    solucion_SEL(A, b, 4)
     
     # Ejemplo 2
     A = [
@@ -297,7 +297,7 @@ def main():
         [-4, -1, -5, 3, -4] 
     ]
     b = [7, 1, 33, 24, -49]
-    # solucion_SEL(A, b, 4)
+    solucion_SEL(A, b, 4)
     
     # Ejemplo 3
     A = [
@@ -309,7 +309,7 @@ def main():
         [-4, 3, 5, 7, 4, 25] 
     ]
     b = [8, 40, 22, 53, 60, 79]
-    # solucion_SEL(A, b, 4)
+    solucion_SEL(A, b, 4)
 
 
 main()
