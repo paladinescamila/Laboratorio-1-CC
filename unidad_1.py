@@ -50,7 +50,7 @@ def dibujar_SPF(t, L, U):
 
     print("Sistema: {0}".format(numeros))
     print("N: {0}\nUFL: {1}\nOFL: {2}".format(N, UFL, OFL))
-    print("Tarda {0}".format(fin-inicio))
+    print("Tarda {0:2f}".format(fin-inicio))
 
     for i in numeros:
         plt.plot(i, 0, marker="o", color="blue", markersize = 10)
@@ -61,7 +61,6 @@ def dibujar_SPF(t, L, U):
 
 # EJEMPLOS DE PRUEBA (También se encuentran en el informe)
 def main():
-	
     # Ejemplo 1
     dibujar_SPF(3,-1,3)
 
@@ -72,4 +71,4 @@ def main():
     dibujar_SPF(3,-2,1)
 
 
-main()
+# main()

@@ -104,7 +104,7 @@ def gauss(A, b):
             else:
                 A, b, cero = permutar(A, b, k)
                 if (cero):
-                    print("El sistema no tiene solución")
+                    print("El sistema no tiene solución.")
                     return []
         x = sucesiva_hacia_atras(A, b)
 
@@ -130,7 +130,7 @@ def gauss_jordan(A, b):
             else:
                 A, b, cero = permutar(A, b, k)
                 if (cero):
-                    print("El sistema no tiene solución")
+                    print("El sistema no tiene solución.")
                     return []
         x = [b[i] / A[i][i] for i in range(n)]
 
@@ -162,7 +162,7 @@ def solucion_SEL(A, b, metodo):
         inicio = time.time()
         x = gauss_jordan(A, b)
         fin = time.time()
-    print("x = {0}\nTarda {1}\n".format(x, fin-inicio))
+    print("x = {0}\nTarda {1}:.2f\n".format(x, fin-inicio))
 
 
 # EJEMPLOS DE PRUEBA (También se encuentran en el informe)
@@ -298,7 +298,7 @@ def main():
     ]
     b = [7, 1, 33, 24, -49]
     solucion_SEL(A, b, 4)
-    
+
     # Ejemplo 3
     A = [
         [13, 20, 25, 55, 32, 107], 
@@ -312,6 +312,4 @@ def main():
     solucion_SEL(A, b, 4)
 
 
-main()
-
-# Rectificar respuesta con: print("x =",list(np.matmul(np.linalg.inv(A), b)))
+# main()
