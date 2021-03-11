@@ -20,7 +20,7 @@ def sucesiva_hacia_atras(A, b):
             sumatoria = 0
             for j in range(i+1, n+1):
                 sumatoria += A[i][j] * x[j]
-            x[i] = (b[i] - sumatoria) / A[i][i]
+            x[i] = round((b[i] - sumatoria) / A[i][i], 5)
 
         return x
 
@@ -41,7 +41,7 @@ def sucesiva_hacia_adelante(A, b):
             sumatoria = 0
             for j in range(i):
                 sumatoria += A[i][j] * x[j]
-            x[i] = (b[i] - sumatoria) / A[i][i]
+            x[i] = round((b[i] - sumatoria) / A[i][i], 5)
 
         return x
 
@@ -132,7 +132,7 @@ def gauss_jordan(A, b):
                 if (cero):
                     print("El sistema no tiene solución.")
                     return []
-        x = [b[i] / A[i][i] for i in range(n)]
+        x = [round(b[i] / A[i][i], 5) for i in range(n)]
 
         return x
 
@@ -162,7 +162,7 @@ def solucion_SEL(A, b, metodo):
         inicio = time.time()
         x = gauss_jordan(A, b)
         fin = time.time()
-    print("x = {0}\nTarda {1}:.2f\n".format(x, fin-inicio))
+    print("x = {0}\nTarda {1:.10f}\n".format(x, fin-inicio))
 
 
 # EJEMPLOS DE PRUEBA (También se encuentran en el informe)
@@ -312,4 +312,30 @@ def main():
     solucion_SEL(A, b, 4)
 
 
-# main()
+main()
+
+# Gauss VS Gauss-Jordan
+def gauss_vs_gauss_jordan(N):
+    tiempo_g = [[], []]
+    tiempo_gj = [[], []]
+    for n in range(2,N+2):
+        A = generate_matrix(n)
+        b = generate_ans(n)
+        # Tiempo para Gauss
+        start = time.time()
+        gauss(A, b)
+        tiempo_g[0] += [n]
+        tiempo_g[1] += [time.time()-start]
+        # Tiempo para Gauss-Jordan
+        start = time.time()
+        gauss_jordan(A, b)
+        tiempo_gj[0] += [n]
+        tiempo_gj[1] += [time.time()-start]
+    plt.plot(tiempo_g[0], tiempo_g[1], marker=".", color="blue", markersize = 7)
+    plt.plot(tiempo_gj[0], tiempo_gj[1], marker=".", color="red", markersize = 7)
+    plt.xlabel('Orden de la matriz (n)')
+    plt.ylabel('Tiempo (segundos)')
+    plt.grid()
+    plt.show()
+
+# gauss_vs_gauss_jordan(100)

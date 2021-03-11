@@ -50,7 +50,7 @@ def dibujar_SPF(t, L, U):
 
     print("Sistema: {0}".format(numeros))
     print("N: {0}\nUFL: {1}\nOFL: {2}".format(N, UFL, OFL))
-    print("Tarda {0:2f}".format(fin-inicio))
+    print("Tarda {0:10f}".format(fin-inicio))
 
     for i in numeros:
         plt.plot(i, 0, marker="o", color="blue", markersize = 10)
@@ -71,4 +71,42 @@ def main():
     dibujar_SPF(3,-2,1)
 
 
-# main()
+main()
+
+# ANÁLISIS DE COMPLEJIDAD
+
+# Variando la precisión
+def tiempo_con_t(n):
+    tabla = [[],[]]
+    for t in range(1, n+1):
+        inicio = time.time()
+        numeros, N, UFL, OFL = punto_flotante(t, -1, 1)
+        fin = time.time()
+        print("{0} & {1:.5f} \\".format(t, fin-inicio)+"\\")
+        tabla[0] += [t]
+        tabla[1] += [fin-inicio]
+    plt.plot(tabla[0], tabla[1], marker=".", color="blue", markersize = 7)
+    plt.xlabel('Precisión (t)')
+    plt.ylabel('Tiempo (segundos)')
+    plt.grid()
+    plt.show()
+
+# Variando el intervalo (simétrico)
+def tiempo_con_LU(n):
+    tabla = [[],[]]
+    for U in range(1, n+1):
+        inicio = time.time()
+        numeros, N, UFL, OFL = punto_flotante(1, (-1)*U, U)
+        fin = time.time()
+        print("$[{0},{1}]$ & {2:.5f} \\".format((-1)*U, U, fin-inicio)+"\\")
+        tabla[0] += [U]
+        tabla[1] += [fin-inicio]
+    plt.plot(tabla[0], tabla[1], marker=".", color="blue", markersize = 7)
+    plt.xlabel('Intervalo [L,U]')
+    plt.ylabel('Tiempo (segundos)')
+    plt.grid()
+    plt.show()
+
+n = 20
+tiempo_con_t(n)
+tiempo_con_LU(n)
