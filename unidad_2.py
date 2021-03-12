@@ -1,6 +1,9 @@
 # UNIDAD 2: SISTEMAS DE ECUACIONES LINEALES
 
 import numpy as np
+from numpy.random import seed as s
+from numpy.random import randn as r
+import matplotlib.pyplot as plt
 import time
 
 
@@ -162,7 +165,7 @@ def solucion_SEL(A, b, metodo):
         inicio = time.time()
         x = gauss_jordan(A, b)
         fin = time.time()
-    print("x = {0}\nTarda {1:.10f}\n".format(x, fin-inicio))
+    print("x = {0}\nTarda {1:.10f}s\n".format(x, fin-inicio))
 
 
 # EJEMPLOS DE PRUEBA (También se encuentran en el informe)
@@ -314,8 +317,24 @@ def main():
 
 main()
 
+# ----------------------------------------------------------------------
+# ANÁLISIS DE COMPLEJIDAD
+
+# Construye una matrix n x n con valores aleatorios
+def generate_matrix(n):
+  ans = []
+  for i in range(n):
+    ans.append(list(r(n)))
+  return ans
+
+# Construye un vector n con valores aleatorios
+def generate_ans(n):
+  return list(r(n))
+
+
 # Gauss VS Gauss-Jordan
 def gauss_vs_gauss_jordan(N):
+    print("COMPLEJIDAD GAUSS VS GAUSS-JORDAN")
     tiempo_g = [[], []]
     tiempo_gj = [[], []]
     for n in range(2,N+2):
@@ -338,4 +357,5 @@ def gauss_vs_gauss_jordan(N):
     plt.grid()
     plt.show()
 
-# gauss_vs_gauss_jordan(100)
+
+gauss_vs_gauss_jordan(100)

@@ -50,10 +50,10 @@ def dibujar_SPF(t, L, U):
 
     print("Sistema: {0}".format(numeros))
     print("N: {0}\nUFL: {1}\nOFL: {2}".format(N, UFL, OFL))
-    print("Tarda {0:10f}".format(fin-inicio))
+    print("Tarda: {0:10f}s".format(fin-inicio))
 
     for i in numeros:
-        plt.plot(i, 0, marker="o", color="blue", markersize = 10)
+        plt.plot(i, 0, marker="o", color="blue", markersize = 5)
     plt.grid()
     plt.show()
     print()
@@ -61,6 +61,7 @@ def dibujar_SPF(t, L, U):
 
 # EJEMPLOS DE PRUEBA (También se encuentran en el informe)
 def main():
+
     # Ejemplo 1
     dibujar_SPF(3,-1,3)
 
@@ -73,39 +74,44 @@ def main():
 
 main()
 
+# ----------------------------------------------------------------------
 # ANÁLISIS DE COMPLEJIDAD
 
 # Variando la precisión
 def tiempo_con_t(n):
+    print("COMPLEJIDAD DEPENDIENDO DE LA PRECISIÓN")
     tabla = [[],[]]
     for t in range(1, n+1):
         inicio = time.time()
         numeros, N, UFL, OFL = punto_flotante(t, -1, 1)
         fin = time.time()
-        print("{0} & {1:.5f} \\".format(t, fin-inicio)+"\\")
+        print("t = {0}, tiempo = {1:.5f}s".format(t, fin-inicio))
         tabla[0] += [t]
         tabla[1] += [fin-inicio]
-    plt.plot(tabla[0], tabla[1], marker=".", color="blue", markersize = 7)
+    plt.plot(tabla[0], tabla[1], marker=".", color="blue")
     plt.xlabel('Precisión (t)')
     plt.ylabel('Tiempo (segundos)')
     plt.grid()
     plt.show()
+    print()
 
 # Variando el intervalo (simétrico)
 def tiempo_con_LU(n):
+    print("COMPLEJIDAD DEPENDIENDO DEL INTERVALO")
     tabla = [[],[]]
     for U in range(1, n+1):
         inicio = time.time()
         numeros, N, UFL, OFL = punto_flotante(1, (-1)*U, U)
         fin = time.time()
-        print("$[{0},{1}]$ & {2:.5f} \\".format((-1)*U, U, fin-inicio)+"\\")
+        print("[L,U] = [{0},{1}], tiempo = {2:.5f}s".format((-1)*U, U, fin-inicio))
         tabla[0] += [U]
         tabla[1] += [fin-inicio]
-    plt.plot(tabla[0], tabla[1], marker=".", color="blue", markersize = 7)
+    plt.plot(tabla[0], tabla[1], marker=".", color="blue")
     plt.xlabel('Intervalo [L,U]')
     plt.ylabel('Tiempo (segundos)')
     plt.grid()
     plt.show()
+    print()
 
 n = 20
 tiempo_con_t(n)
