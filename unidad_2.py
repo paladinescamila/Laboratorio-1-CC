@@ -99,16 +99,15 @@ def gauss(A, b):
         return []
     else:
         n = len(A)
-        for k in range(n-1):
-            if (A[k][k] != 0):
-                M = matriz_de_eliminacion(A, k, 1)
-                A = np.matmul(M, A)
-                b = np.matmul(M, b)
-            else:
+        for k in range(n - 1):
+            if (A[k][k] == 0):
                 A, b, cero = permutar(A, b, k)
                 if (cero):
                     print("El sistema no tiene solución.")
                     return []
+            M = matriz_de_eliminacion(A, k, 1)
+            A = np.matmul(M, A)
+            b = np.matmul(M, b)
         x = sucesiva_hacia_atras(A, b)
 
         return x
@@ -126,15 +125,14 @@ def gauss_jordan(A, b):
     else:
         n = len(A)
         for k in range(n):
-            if (A[k][k] != 0):
-                M = matriz_de_eliminacion(A, k, 0)
-                A = np.matmul(M, A)
-                b = np.matmul(M, b)
-            else:
+            if (A[k][k] == 0):
                 A, b, cero = permutar(A, b, k)
                 if (cero):
                     print("El sistema no tiene solución.")
                     return []
+            M = matriz_de_eliminacion(A, k, 0)
+            A = np.matmul(M, A)
+            b = np.matmul(M, b)
         x = [round(b[i] / A[i][i], 5) for i in range(n)]
 
         return x
