@@ -338,16 +338,19 @@ def gauss_vs_gauss_jordan(N):
     for n in range(2,N+2):
         A = generate_matrix(n)
         b = generate_ans(n)
+
         # Tiempo para Gauss
         start = time.time()
         gauss(A, b)
         tiempo_g[0] += [n]
         tiempo_g[1] += [time.time()-start]
+        
         # Tiempo para Gauss-Jordan
         start = time.time()
         gauss_jordan(A, b)
         tiempo_gj[0] += [n]
         tiempo_gj[1] += [time.time()-start]
+    
     plt.plot(tiempo_g[0], tiempo_g[1], marker=".", color="blue", markersize = 7)
     plt.plot(tiempo_gj[0], tiempo_gj[1], marker=".", color="red", markersize = 7)
     plt.xlabel('Orden de la matriz (n)')
@@ -356,4 +359,4 @@ def gauss_vs_gauss_jordan(N):
     plt.show()
 
 
-gauss_vs_gauss_jordan(100)
+gauss_vs_gauss_jordan(150)
